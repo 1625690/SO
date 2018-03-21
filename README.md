@@ -1,3 +1,3 @@
 # SO
 Proyecto de Sistemas Operativos
-Este repositorio guar
+Este repositorio tiene guardado el script xddd
