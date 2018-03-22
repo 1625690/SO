@@ -1,7 +1,15 @@
 #!/bin/bash
 NUMPROCESOS=$(ps ax | tail -n +2 | wc -l)
-PORCMEM=$(vmstat | tail -n 1 | awk '{print $4}')
-PORCHD=$(df | grep root | awk '{print $5}'| cut -c1-2)
+MEMFREE=$(grep MemFree /proc/meminfo | awk '{print $2}')
+MEMTOTAL=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+PORCMEM=$(($MEMFREE * 100/$MEMTOTAL))
+
+HDTOTAL=$(df | grep root | awk '{print $4}')
+HDUSED=$(df | grep root | awk '{print $3}')
+HDDISP=$(($HDTOTAL - $HDUSED))
+HDPORC=$(($HDDISP * 100 / $HDTOTAL))
+
+
 echo ${NUMPROCESOS}
 echo ${PORCMEM}
 echo ${PORCHD}
